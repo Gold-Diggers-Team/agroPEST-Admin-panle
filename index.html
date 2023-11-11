@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>agroPEST Admin Panel</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div style="display: flex;align-items: center; justify-content: center; ">
+
+        <div class="rectangle">
+            <div class="header">
+                <img src="logo.png" id="logo"/>
+                <div id="app-name">
+                    <h1 style="color: #FFF;
+                                font-family: Arial, Helvetica, sans-serif;
+                                text-align: center;
+                                font-size: 60px;
+                                font-style: normal;
+                                text-align: left;
+                                font-weight: 700;
+                                line-height: 0;
+                                text-shadow: 0 0 3px #000000, 0 0 5px #000000;">agro
+                        <strong style="font-family: Arial, Helvetica, sans-serif;
+                                color: #FFF;
+                                text-align: center;
+                                font-size: 60px;
+                                font-weight: 700;
+                                text-shadow: 0 0 10px #000000, 0 0 10px #000000; 
+                                letter-spacing: 3px;">PEST</strong></h1>
+                    <h1 id="hedaer-topic">Admin panle</h1>
+                </div>
+            </div> 
+
+             <!-- button container-->
+            <div style="display: flex;justify-content: center;">
+                <div id="buttons">
+                    <div class="button pesticides">
+                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;font-weight: 600;">Pesticides</p>
+                        <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 30px; color: #1C470D;"></i>
+                    </div>
+                    <div class="button fertilizer">
+                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;font-weight: 600;">Fertilizer</p>
+                        <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 30px; color: #1C470D;"></i>
+                    </div>
+                    <div class="button information">
+                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;font-weight: 600;">Agriculture Service</p>
+                        <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 30px;color: #1C470D;"></i>
+                    </div>
+                </div>     
+            </div>
+
+            <!-- Form container-->
+            <div style="display: flex;align-items: center;justify-content: center;">
+                <div style="margin-top: 10px;    
+                width: 880px;
+                height: 520px;
+                border-radius: 15px;
+                background: rgba(121, 152, 187, 0.71);
+                box-shadow: 5px 4px 17px 10px rgba(0, 0, 0, 0.25);">
+            
+            <!-- Pesticides form content -->
+                <div id="content-one">
+                    <table id="form1">
+                        <tr>
+                            <td class="text">Pesticide Name</td>
+                            <td class="text">:</td>
+                            <td colspan="2"><input id="name" type="text"/></td>
+                            <td class="text">IsAvilable</td>
+                            <td class="text">:</td>
+                            <td colspan="2"><input id="isAvilable" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td class="text">Price</td>
+                            <td class="text">:</td>
+                            <td><input id="price" type="text"/></td>
+                            <td></td>
+                            <td class="text">Image</td>
+                            <td class="text">:</td>
+                            <td><input type="file" id="imageUpload"/></td>
+                        </tr>
+                        <tr>
+                            <td class="text">Description</td>
+                            <td class="text">:</td>
+                            <td colspan="5"><textarea id="description" name="description"></textarea></td>
+                        </tr>
+                    </table>
+                    <div id="form-buttons">
+                        <div style="width: 50%;display: flex;justify-content: space-between;">
+                            <input type="submit" name="submit" id="submitPesticides"/>
+                            <input type="reset" name="submit" id="resetPesticides"/>
+                        </div>
+                    </div> 
+                </div>
+
+            <!-- Fertlizer form content -->
+                <div id="content-two">
+                    <table id="form2">
+                        <tr>
+                            <td class="text">Fertilizer Name</td>
+                            <td class="text">:</td>
+                            <td colspan="2"><input id="nameFertilizer" type="text"/></td>
+                            <td class="text">IsAvilable</td>
+                            <td class="text">:</td>
+                            <td colspan="2"><input id="isAvilableFertlizer" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td class="text">Price</td>
+                            <td class="text">:</td>
+                            <td><input id="priceFertilizer" type="text"/></td>
+                            <td></td>
+                            <td class="text">Image</td>
+                            <td class="text">:</td>
+                            <td><input type="file" id="imageUploadFertilizer"/></td>
+                        </tr>
+                        <tr>
+                            <td class="text">Description</td>
+                            <td class="text">:</td>
+                            <td colspan="5"><textarea id="descriptionFertilizer" name="description"></textarea></td>
+                        </tr>
+                    </table>
+                    <div id="form-buttons">
+                        <div style="width: 50%;display: flex;justify-content: space-between;">
+                            <input type="submit" name="submit" id="submitFertilizer"/>
+                            <input type="reset" name="submit" id="resetFertilizer"/>
+                        </div>
+                    </div> 
+                </div>
+
+            <!-- Agriculture service form content -->   
+                <div id="content-three">
+                    <table id="form">
+                        <tr>
+                            <td class="text">Department name</td>
+                            <td class="text">:</td>
+                            <td colspan="5"><input id="depName" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td class="text">Contact number</td>
+                            <td class="text">:</td>
+                            <td ><input id="tel" type="tel"/></td>
+                            <td></td>
+                            <td class="text">Location</td>
+                            <td class="text">:</td>
+                            <td ><input id="location" type="text"/></td>
+                        </tr>
+                     
+                        <tr>
+                            <td class="text">Description</td>
+                            <td class="text">:</td>
+                            <td colspan="5"><textarea id="descriptionInfo" name="description"></textarea></td>
+                        </tr>
+                    </table>
+                    <div id="form-buttons">
+                        <div style="width: 50%;display: flex;justify-content: space-between;">
+                            <input type="submit" name="submit" id="submitInformation"/>
+                            <input type="reset" name="submit" id="resetInformation"/>
+                        </div>
+                    </div> 
+                </div>
+      
+            </div>
+           </div>
+           
+           
+        </div> 
+    </div>
+
+    <!-- Include Firebase library -->
+<!-- Include Firebase library -->
+<!-- Include Firebase library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+
+
+<!-- Your script.js inclusion -->
+<script src="script.js" defer></script>
+
+    
+</body>
+</html>
