@@ -83,8 +83,10 @@ function GetDetails() {
   var name = document.getElementById("name").value;
   var price = document.getElementById("price").value;
   var description = document.getElementById("description").value;
+
   var image = document.getElementById("imageUpload");
   var imageFile = image.files[0];
+
   var isAvilable = document.getElementById("isAvilable").value;
 
   if (!name) {
@@ -112,7 +114,10 @@ function GetFertlizerDetails() {
   var name = document.getElementById("nameFertilizer").value;
   var price = document.getElementById("priceFertilizer").value;
   var description = document.getElementById("descriptionFertilizer").value;
-  var image = document.getElementById("imageUploadFertilizer").value;
+
+  var image = document.getElementById("imageUploadFertilizer");
+  var imageFile = image.files[0];
+
   var isAvilableFertlizer = document.getElementById(
     "isAvilableFertlizer"
   ).value;
@@ -123,13 +128,24 @@ function GetFertlizerDetails() {
     alert("Price is required");
   } else if (!description) {
     alert("Description is required");
-  } else if (!image) {
+  } else if (!imageFile) {
     alert("Image is required");
   } else if (!isAvilableFertlizer) {
     alert("IsAvilable is required");
   } else {
-    saveFertlizerDetails(name, price, description, image, isAvilableFertlizer);
     alert("Data added successfully");
+    // Convert the image to Base64
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      saveFertlizerDetails(
+        name,
+        price,
+        description,
+        reader.result,
+        isAvilableFertlizer
+      );
+    };
+    reader.readAsDataURL(imageFile);
   }
 }
 
@@ -152,17 +168,6 @@ function GetInformation() {
     alert("Data added successfully");
   }
 }
-
-// const saveDetails = (name, price, description, image, isAvilable) => {
-//   var newDetails = details.push();
-//   newDetails.set({
-//     name: name,
-//     price: price,
-//     description: description,
-//     image: image,
-//     isAvilable: isAvilable,
-//   });
-// };
 
 const saveDetails = (name, price, description, image, isAvilable) => {
   var storageRef = firebase.storage().ref();
@@ -200,15 +205,34 @@ const saveFertlizerDetails = (
   image,
   isAvilableFertlizer
 ) => {
-  var newDetails = detailsFertilizer.push();
-  newDetails.set({
-    name: name,
-    price: price,
-    description: description,
-    image: image,
-    isAvilableFertlizer: isAvilableFertlizer,
+  var storageRef = firebase.storage().ref();
+  var imagesRef = storageRef.child("images/" + name + ".jpg"); // Adjust the path and file name as needed
+
+  // Convert Base64 to Blob
+  var byteCharacters = atob(image.split(",")[1]);
+  var byteNumbers = new Array(byteCharacters.length);
+  for (var i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  var byteArray = new Uint8Array(byteNumbers);
+  var blob = new Blob([byteArray], { type: "image/jpeg" });
+
+  // Upload the image to Firebase Storage
+  imagesRef.put(blob).then(function (snapshot) {
+    // Get the download URL and save it in the Realtime Database
+    snapshot.ref.getDownloadURL().then(function (downloadURL) {
+      var newDetails = detailsFertilizer.push();
+      newDetails.set({
+        name: name,
+        price: price,
+        description: description,
+        image: downloadURL, // Store the download URL
+        isAvilableFertlizer: isAvilableFertlizer,
+      });
+    });
   });
 };
+
 const saveInformation = (depName, tel, description, location) => {
   var newDetails = detailsAgriService.push();
   newDetails.set({
@@ -224,11 +248,13 @@ function ClearDetails() {
   document.getElementById("price").value = "";
   document.getElementById("description").value = "";
   document.getElementById("imageUpload").value = "";
+  document.getElementById("isAvilable").value = "";
 
   document.getElementById("nameFertilizer").value = "";
   document.getElementById("priceFertilizer").value = "";
   document.getElementById("descriptionFertilizer").value = "";
   document.getElementById("imageUploadFertilizer").value = "";
+  document.getElementById("isAvilableFertlizer").value = "";
 
   document.getElementById("location").value = "";
   document.getElementById("tel").value = "";
