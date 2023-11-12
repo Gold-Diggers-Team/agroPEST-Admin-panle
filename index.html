@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div style="display: flex;align-items: center; justify-content: center; ">
-
         <div class="rectangle">
             <div class="header">
                 <img src="logo.png" id="logo"/>
@@ -75,11 +73,11 @@
                         <tr>
                             <td class="text">Price</td>
                             <td class="text">:</td>
-                            <td><input id="price" type="text"/></td>
+                            <td><input id="price"  type="text"/></td>
                             <td></td>
                             <td class="text">Image</td>
                             <td class="text">:</td>
-                            <td><input type="file" id="imageUpload"/></td>
+                            <td><input type="file" id="imageUpload" accept="image/*" /></td>
                         </tr>
                         <tr>
                             <td class="text">Description</td>
@@ -166,14 +164,11 @@
            
            
         </div> 
-    </div>
 
     <!-- Include Firebase library -->
 <!-- Include Firebase library -->
 <!-- Include Firebase library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
-
-
 <!-- Your script.js inclusion -->
 <script src="script.js" defer></script>
 

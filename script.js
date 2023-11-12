@@ -83,7 +83,8 @@ function GetDetails() {
   var name = document.getElementById("name").value;
   var price = document.getElementById("price").value;
   var description = document.getElementById("description").value;
-  var image = document.getElementById("imageUpload").value;
+  var image = document.getElementById("imageUpload");
+  var imageFile = image.files[0];
   var isAvilable = document.getElementById("isAvilable").value;
 
   if (!name) {
@@ -97,8 +98,13 @@ function GetDetails() {
   } else if (!isAvilable) {
     alert("IsAvilable is required");
   } else {
-    saveDetails(name, price, description, image, isAvilable);
     alert("Data added successfully");
+    // Convert the image to Base64
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      saveDetails(name, price, description, reader.result, isAvilable);
+    };
+    reader.readAsDataURL(imageFile);
   }
 }
 
@@ -147,14 +153,43 @@ function GetInformation() {
   }
 }
 
+// const saveDetails = (name, price, description, image, isAvilable) => {
+//   var newDetails = details.push();
+//   newDetails.set({
+//     name: name,
+//     price: price,
+//     description: description,
+//     image: image,
+//     isAvilable: isAvilable,
+//   });
+// };
+
 const saveDetails = (name, price, description, image, isAvilable) => {
-  var newDetails = details.push();
-  newDetails.set({
-    name: name,
-    price: price,
-    description: description,
-    image: image,
-    isAvilable: isAvilable,
+  var storageRef = firebase.storage().ref();
+  var imagesRef = storageRef.child("images/" + name + ".jpg"); // Adjust the path and file name as needed
+
+  // Convert Base64 to Blob
+  var byteCharacters = atob(image.split(",")[1]);
+  var byteNumbers = new Array(byteCharacters.length);
+  for (var i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  var byteArray = new Uint8Array(byteNumbers);
+  var blob = new Blob([byteArray], { type: "image/jpeg" });
+
+  // Upload the image to Firebase Storage
+  imagesRef.put(blob).then(function (snapshot) {
+    // Get the download URL and save it in the Realtime Database
+    snapshot.ref.getDownloadURL().then(function (downloadURL) {
+      var newDetails = details.push();
+      newDetails.set({
+        name: name,
+        price: price,
+        description: description,
+        image: downloadURL, // Store the download URL
+        isAvilable: isAvilable,
+      });
+    });
   });
 };
 
