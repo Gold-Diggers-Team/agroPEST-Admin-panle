@@ -104,7 +104,7 @@ function GetDetails() {
     // Convert the image to Base64
     var reader = new FileReader();
     reader.onloadend = function () {
-      saveDetails(name, price, description, reader.result, isAvilable);
+      saveDetails(name, "Rs." + price, description, reader.result, isAvilable);
     };
     reader.readAsDataURL(imageFile);
   }
