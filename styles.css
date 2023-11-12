@@ -82,10 +82,17 @@ body{
   font-family: Arial, Helvetica, sans-serif;
   padding: 20px;
 }
-
-#nameFertilizer,
 #isAvilable,
-#isAvilableFertlizer,
+#isAvilableFertlizer{
+  outline: none;
+  height: 40px;
+  border-radius: 10px;
+  width: 150px;
+  text-align: center;
+  padding-left: 10px;
+  margin: 20px;
+}
+#nameFertilizer,
 #name{
     outline: none;
     height: 15px;
