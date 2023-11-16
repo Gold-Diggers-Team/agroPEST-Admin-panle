@@ -106,6 +106,7 @@ body{
     padding: 16px;
     background: #F7F7F7;
 }
+#question,
 #depName{
     outline: none;
     height: 15px;
@@ -117,6 +118,7 @@ body{
     padding: 16px;
     background: #F7F7F7;
 }
+
 #tel,#location{
     outline: none;
     height: 15px;
@@ -216,6 +218,9 @@ input[type="file"]::file-selector-button {
   }
 
   #content-three{
+    display: none;
+  }
+  #content-four{
     display: none;
   }
   /* Media query for smaller screens */

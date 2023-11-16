@@ -1,12 +1,14 @@
 var form = document.getElementById("content-one");
 var form2 = document.getElementById("content-two");
 var form3 = document.getElementById("content-three");
+var form4 = document.getElementById("content-four");
 
 function toggleForm() {
   if (form.style.display === "none") {
     form.style.display = "block";
     form2.style.display = "none";
     form3.style.display = "none";
+    form4.style.display = "none";
   } else {
     form.style.display = "none";
   }
@@ -17,6 +19,7 @@ function toggleForm2() {
     form2.style.display = "block";
     form.style.display = "none";
     form3.style.display = "none";
+    form4.style.display = "none";
   } else {
     form2.style.display = "none";
   }
@@ -27,14 +30,27 @@ function toggleForm3() {
     form3.style.display = "block";
     form.style.display = "none";
     form2.style.display = "none";
+    form4.style.display = "none";
   } else {
     form3.style.display = "none";
+  }
+}
+
+function toggleForm4() {
+  if (form4.style.display === "none") {
+    form4.style.display = "block";
+    form3.style.display = "none";
+    form.style.display = "none";
+    form2.style.display = "none";
+  } else {
+    form4.style.display = "none";
   }
 }
 
 var pesticidesButtons = document.getElementsByClassName("pesticides");
 var fertilizerButtons = document.getElementsByClassName("fertilizer");
 var informationButtons = document.getElementsByClassName("information");
+var faqButtons = document.getElementsByClassName("faq");
 
 if (pesticidesButtons.length > 0) {
   pesticidesButtons[0].addEventListener("click", function () {
@@ -51,6 +67,12 @@ if (fertilizerButtons.length > 0) {
 if (informationButtons.length > 0) {
   informationButtons[0].addEventListener("click", function () {
     toggleForm3();
+  });
+}
+
+if (faqButtons.length > 0) {
+  faqButtons[0].addEventListener("click", function () {
+    toggleForm4();
   });
 }
 
