@@ -92,14 +92,17 @@ firebase.initializeApp(firebaseConfig);
 const details = firebase.database().ref("form1");
 const detailsFertilizer = firebase.database().ref("form2");
 const detailsAgriService = firebase.database().ref("form");
+const questionAndAnswer = firebase.database().ref("FAQ");
 
 var submitPesticides = document.getElementById("submitPesticides");
 var submitFertilizer = document.getElementById("submitFertilizer");
 var submitInformation = document.getElementById("submitInformation");
+var submitFAQ = document.getElementById("submitFAQ");
 
 var resetPesticides = document.getElementById("resetPesticides");
 var resetFertilizer = document.getElementById("resetFertilizer");
 var resetInformation = document.getElementById("resetInformation");
+var resetFAQ = document.getElementById("resetFAQ");
 
 function GetDetails() {
   var name = document.getElementById("name").value;
@@ -191,6 +194,20 @@ function GetInformation() {
   }
 }
 
+function GetFAQ() {
+  var question = document.getElementById("question").value;
+  var Answer = document.getElementById("Answer").value;
+
+  if (!question) {
+    alert("Question is required");
+  } else if (!Answer) {
+    alert("Answer is required");
+  } else {
+    saveFAQ(question, Answer);
+    alert("Data added successfully");
+  }
+}
+
 const saveDetails = (name, price, description, image, isAvilable) => {
   var storageRef = firebase.storage().ref();
   var imagesRef = storageRef.child("images/" + name + ".jpg"); // Adjust the path and file name as needed
@@ -265,6 +282,14 @@ const saveInformation = (depName, tel, description, location) => {
   });
 };
 
+const saveFAQ = (question, Answer) => {
+  var newDetails = detailsAgriService.push();
+  newDetails.set({
+    question: question,
+    Answer: Answer,
+  });
+};
+
 function ClearDetails() {
   document.getElementById("name").value = "";
   document.getElementById("price").value = "";
@@ -282,6 +307,9 @@ function ClearDetails() {
   document.getElementById("tel").value = "";
   document.getElementById("depName").value = "";
   document.getElementById("descriptionInfo").value = "";
+
+  document.getElementById("question").value = "";
+  document.getElementById("Answer").value = "";
 }
 
 submitPesticides.addEventListener("click", function () {
@@ -296,6 +324,10 @@ submitInformation.addEventListener("click", function () {
   GetInformation();
 });
 
+submitFAQ.addEventListener("click", function () {
+  GetFAQ();
+});
+
 resetPesticides.addEventListener("click", function () {
   ClearDetails();
 });
@@ -303,5 +335,8 @@ resetFertilizer.addEventListener("click", function () {
   ClearDetails();
 });
 resetInformation.addEventListener("click", function () {
+  ClearDetails();
+});
+resetFAQ.addEventListener("click", function () {
   ClearDetails();
 });
