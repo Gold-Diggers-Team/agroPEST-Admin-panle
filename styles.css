@@ -68,7 +68,9 @@ body{
 .rectangle #buttons{
     display: flex;
     margin-top: 20px;
-    width: 80%;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
     justify-content: space-between;
 }
 
