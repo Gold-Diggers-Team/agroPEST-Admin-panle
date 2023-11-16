@@ -283,7 +283,7 @@ const saveInformation = (depName, tel, description, location) => {
 };
 
 const saveFAQ = (question, Answer) => {
-  var newDetails = detailsAgriService.push();
+  var newDetails = questionAndAnswer.push();
   newDetails.set({
     question: question,
     Answer: Answer,
