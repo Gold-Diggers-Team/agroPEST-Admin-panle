@@ -54,14 +54,15 @@
                 </div>     
             </div>
 
-            <!-- Form container-->
-            <div style="display: flex;align-items: center;justify-content: center;">
+       
+            <div style="display: flex; width: 100%; justify-content:space-around;">
+
                 <div style="margin-top: 10px;    
-                width: 880px;
-                height: 520px;
-                border-radius: 15px;
-                background: rgba(121, 152, 187, 0.71);
-                box-shadow: 5px 4px 17px 10px rgba(0, 0, 0, 0.25);">
+                            width: 611px;
+                            height: 520px;
+                            border-radius: 15px;
+                            background: rgba(121, 152, 187, 0.71);
+                            box-shadow: 5px 4px 17px 10px rgba(0, 0, 0, 0.25);">
             
             <!-- Pesticides form content -->
                 <div id="content-one">
@@ -69,10 +70,12 @@
                         <tr>
                             <td class="text">Pesticide Name</td>
                             <td class="text">:</td>
-                            <td colspan="2"><input id="name" type="text"/></td>
+                            <td><input id="name" type="text"/></td>
+                        </tr>
+                        <tr>
                             <td class="text">IsAvilable</td>
                             <td class="text">:</td>
-                            <td colspan="2"><select id="isAvilable">
+                            <td ><select id="isAvilable">
                                 <option value="Available">Available</option>
                                 <option value="Out-of Stock">Out-of Stock</option>
                             </select></td>
@@ -82,6 +85,8 @@
                             <td class="text">:</td>
                             <td><input id="price"  type="text"/></td>
                             <td></td>
+                        </tr>
+                        <tr>
                             <td class="text">Image</td>
                             <td class="text">:</td>
                             <td><input type="file" id="imageUpload" accept="image/*" /></td>
@@ -93,7 +98,7 @@
                         </tr>
                     </table>
                     <div id="form-buttons">
-                        <div style="width: 50%;display: flex;justify-content: space-between;">
+                        <div style="width: 100%;display: flex;justify-content: space-evenly;">
                             <input type="submit" name="submit" id="submitPesticides"/>
                             <input type="reset" name="submit" id="resetPesticides"/>
                         </div>
@@ -106,10 +111,12 @@
                         <tr>
                             <td class="text">Fertilizer Name</td>
                             <td class="text">:</td>
-                            <td colspan="2"><input id="nameFertilizer" type="text"/></td>
+                            <td ><input id="nameFertilizer" type="text"/></td>
+                        </tr>
+                        <tr>
                             <td class="text">IsAvilable</td>
                             <td class="text">:</td>
-                            <td colspan="2"><select id="isAvilableFertlizer">
+                            <td ><select id="isAvilableFertlizer">
                                 <option value="Available">Available</option>
                                 <option value="Out-of Stock">Out-of Stock</option>
                             </select></td>
@@ -117,8 +124,9 @@
                         <tr>
                             <td class="text">Price</td>
                             <td class="text">:</td>
-                            <td><input id="priceFertilizer" type="text"/></td>
-                            <td></td>
+                            <td><input id="priceFertilizer" type="text"/></td> 
+                        </tr>
+                        <tr>
                             <td class="text">Image</td>
                             <td class="text">:</td>
                             <td><input type="file" id="imageUploadFertilizer" accept="image/*"/></td>
@@ -130,7 +138,7 @@
                         </tr>
                     </table>
                     <div id="form-buttons">
-                        <div style="width: 50%;display: flex;justify-content: space-between;">
+                        <div style="width: 100%;display: flex;justify-content: space-evenly;">
                             <input type="submit" name="submit" id="submitFertilizer"/>
                             <input type="reset" name="submit" id="resetFertilizer"/>
                         </div>
@@ -149,7 +157,9 @@
                             <td class="text">Contact number</td>
                             <td class="text">:</td>
                             <td ><input id="tel" type="tel"/></td>
-                            <td></td>
+                            
+                        </tr>
+                        <tr>
                             <td class="text">Location</td>
                             <td class="text">:</td>
                             <td ><input id="location" type="text"/></td>
@@ -162,7 +172,7 @@
                         </tr>
                     </table>
                     <div id="form-buttons">
-                        <div style="width: 50%;display: flex;justify-content: space-between;">
+                        <div style="width: 100%;display: flex;justify-content: space-evenly;">
                             <input type="submit" name="submit" id="submitInformation"/>
                             <input type="reset" name="submit" id="resetInformation"/>
                         </div>
@@ -186,7 +196,7 @@
                     </tr>
                 </table>
                 <div id="form-buttons">
-                    <div style="width: 50%;display: flex;justify-content: space-between;">
+                    <div style="width: 100%;display: flex;justify-content: space-evenly;">
                         <input type="submit" name="submit" id="submitFAQ"/>
                         <input type="reset" name="submit" id="resetFAQ"/>
                     </div>
@@ -194,9 +204,15 @@
             </div>
       
             </div>
+
+            <div style="margin-top: 10px;    
+                        width: 426px;
+                        height: 520px;
+                        border-radius: 15px;
+                        background: rgba(121, 152, 187, 0.71);
+                        box-shadow: 5px 4px 17px 10px rgba(0, 0, 0, 0.25);"> 
+            </div>
            </div>
-           
-           
         </div> 
 
     <!-- Include Firebase library -->

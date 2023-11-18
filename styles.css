@@ -6,6 +6,10 @@ body{
     background-color: #1E1E1E ;
     overflow: hidden;
 }
+
+.rectangle-container{
+  display: flex;
+}
 .rectangle{
     width: 1138px;
     height: 824px;
@@ -75,14 +79,11 @@ body{
 }
 
 #FAQ  tr td,
+#form tr td,
 #form2 tr td,
 #form1 tr td{
     font-family: Arial, Helvetica, sans-serif;
-    padding: 20px;
-}
-#form tr td{
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 20px;
+    padding: 10px;
 }
 #isAvilable,
 #isAvilableFertlizer{
@@ -92,7 +93,7 @@ body{
   width: 150px;
   text-align: center;
   padding-left: 10px;
-  margin: 20px;
+
 }
 #nameFertilizer,
 #name{
@@ -117,6 +118,12 @@ body{
     margin: 10px auto;
     padding: 16px;
     background: #F7F7F7;
+}
+#Answer,
+#description{
+  height: 70px;
+  width: 300px;
+  resize: none;
 }
 
 #tel,#location{
