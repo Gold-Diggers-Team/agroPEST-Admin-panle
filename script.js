@@ -268,9 +268,6 @@ function displayDataInScrollView(data, section) {
       var item = data[key];
 
       // Create elements
-      var listItemContainer = document.createElement("div");
-      listItemContainer.className = "list-item-container";
-
       var listItem = document.createElement("div");
       listItem.className = "list-item";
 
@@ -333,12 +330,22 @@ function displayAgriInfoInScrollView(data, section) {
       var location = document.createElement("p");
       location.textContent = "Location : " + item.location;
 
-      // ... create other elements for other properties
+      // Create delete button
+      var deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      // Use an IIFE (Immediately Invoked Function Expression) to capture the correct value of 'key'
+      (function (itemKey) {
+        deleteButton.addEventListener("click", function () {
+          // Call a function to handle deletion
+          deleteItem(itemKey, section);
+        });
+      })(key);
 
       // Append elements to the list item
       listItem.appendChild(depName);
       listItem.appendChild(tel);
       listItem.appendChild(location);
+      listItem.appendChild(deleteButton);
       // ... append other elements
 
       // Append the list item to the container
@@ -368,9 +375,21 @@ function displayFAQuestionInScrollView(data, section) {
       var answer = document.createElement("p");
       answer.textContent = "Answer: " + item.Answer;
 
+      // Create delete button
+      var deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      // Use an IIFE (Immediately Invoked Function Expression) to capture the correct value of 'key'
+      (function (itemKey) {
+        deleteButton.addEventListener("click", function () {
+          // Call a function to handle deletion
+          deleteItem(itemKey, section);
+        });
+      })(key);
+
       // Append elements to the list item
       listItem.appendChild(question);
       listItem.appendChild(answer);
+      listItem.appendChild(deleteButton);
       // ... append other elements
 
       // Append the list item to the container

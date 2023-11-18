@@ -283,6 +283,17 @@ input[type="file"]::file-selector-button {
   border-radius: 4px;/* Add some space between the button and other elements */
 }
 
+.list-item-two   button {
+  background-color: #ff5c5c; /* Red background color */
+  color: #fff; /* White text color */
+  border: none;
+  padding: 10px;
+  display: flex;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;/* Add some space between the button and other elements */
+}
+
 button:hover {
   background-color: #ff3333; /* Darker red on hover */
 }
