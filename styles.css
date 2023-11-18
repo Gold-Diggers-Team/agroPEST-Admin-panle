@@ -230,7 +230,7 @@ input[type="file"]::file-selector-button {
   #content-four{
     display: none;
   }
-  /* Media query for smaller screens */
+
 @media only screen and (max-width: 768px) {
   .rectangle {
       height: auto;
@@ -242,5 +242,83 @@ input[type="file"]::file-selector-button {
       height: auto;
   }
 
-  /* Add more responsive styles as needed */
+
+}
+
+.list-item-container{
+  display: flex;
+}
+
+.list-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 10px;
+  display: block;
+  width: 200px; 
+}
+
+.list-item-two {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 90%;
+  margin-left: 10px;
+  margin-top: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+/* Add any necessary styles for the delete button */
+.list-item button {
+  background-color: #ff5c5c; /* Red background color */
+  color: #fff; /* White text color */
+  border: none;
+  padding: 10px;
+  display: flex;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;/* Add some space between the button and other elements */
+}
+
+button:hover {
+  background-color: #ff3333; /* Darker red on hover */
+}
+
+
+.list-item img {
+  max-width: 70px;
+  height: 70px;
+  margin-bottom: 10px; 
+}
+
+.list-item h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.list-item p {
+  margin-bottom: 5px;
+}
+
+::-webkit-scrollbar {
+ margin: 2px;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:rgb(25, 65, 110); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(7, 34, 65, 0.71); 
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(121, 152, 187, 0.71); 
+}
+
+::-webkit-scrollbar-track:hover {
+  background-color:rgba(121, 152, 187, 0.71);
 }

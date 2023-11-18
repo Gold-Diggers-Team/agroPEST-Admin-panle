@@ -3,79 +3,6 @@ var form2 = document.getElementById("content-two");
 var form3 = document.getElementById("content-three");
 var form4 = document.getElementById("content-four");
 
-function toggleForm() {
-  if (form.style.display === "none") {
-    form.style.display = "block";
-    form2.style.display = "none";
-    form3.style.display = "none";
-    form4.style.display = "none";
-  } else {
-    form.style.display = "none";
-  }
-}
-
-function toggleForm2() {
-  if (form2.style.display === "none") {
-    form2.style.display = "block";
-    form.style.display = "none";
-    form3.style.display = "none";
-    form4.style.display = "none";
-  } else {
-    form2.style.display = "none";
-  }
-}
-
-function toggleForm3() {
-  if (form3.style.display === "none") {
-    form3.style.display = "block";
-    form.style.display = "none";
-    form2.style.display = "none";
-    form4.style.display = "none";
-  } else {
-    form3.style.display = "none";
-  }
-}
-
-function toggleForm4() {
-  if (form4.style.display === "none") {
-    form4.style.display = "block";
-    form3.style.display = "none";
-    form.style.display = "none";
-    form2.style.display = "none";
-  } else {
-    form4.style.display = "none";
-  }
-}
-
-var pesticidesButtons = document.getElementsByClassName("pesticides");
-var fertilizerButtons = document.getElementsByClassName("fertilizer");
-var informationButtons = document.getElementsByClassName("information");
-var faqButtons = document.getElementsByClassName("faq");
-
-if (pesticidesButtons.length > 0) {
-  pesticidesButtons[0].addEventListener("click", function () {
-    toggleForm();
-  });
-}
-
-if (fertilizerButtons.length > 0) {
-  fertilizerButtons[0].addEventListener("click", function () {
-    toggleForm2();
-  });
-}
-
-if (informationButtons.length > 0) {
-  informationButtons[0].addEventListener("click", function () {
-    toggleForm3();
-  });
-}
-
-if (faqButtons.length > 0) {
-  faqButtons[0].addEventListener("click", function () {
-    toggleForm4();
-  });
-}
-
 const firebaseConfig = {
   apiKey: "AIzaSyDG32cdGdQUzLHSiy_zno2svW1ShhFW4cs",
   authDomain: "admin-panle-e914a.firebaseapp.com",
@@ -178,7 +105,6 @@ function GetInformation() {
   var depName = document.getElementById("depName").value;
   var tel = document.getElementById("tel").value;
   var location = document.getElementById("location").value;
-  var description = document.getElementById("descriptionInfo").value;
 
   if (!depName) {
     alert("Department name is required");
@@ -186,10 +112,8 @@ function GetInformation() {
     alert("Telephon number is required");
   } else if (!location) {
     alert("Location is required");
-  } else if (!description) {
-    alert("Description is required");
   } else {
-    saveInformation(depName, tel, description, location);
+    saveInformation(depName, tel, location);
     alert("Data added successfully");
   }
 }
@@ -272,12 +196,11 @@ const saveFertlizerDetails = (
   });
 };
 
-const saveInformation = (depName, tel, description, location) => {
+const saveInformation = (depName, tel, location) => {
   var newDetails = detailsAgriService.push();
   newDetails.set({
     depName: depName,
     tel: tel,
-    description: description,
     location: location,
   });
 };
@@ -289,6 +212,172 @@ const saveFAQ = (question, Answer) => {
     Answer: Answer,
   });
 };
+
+function deleteItem(key, section) {
+  // Ask for confirmation
+  var confirmDelete = confirm("Are you sure you want to delete this item?");
+
+  if (confirmDelete) {
+    // Reference to the item in the database
+    var itemRef;
+
+    // Determine the appropriate reference based on the section
+    switch (section) {
+      case "details":
+        itemRef = details.child(key);
+        break;
+      case "detailsFertilizer":
+        itemRef = detailsFertilizer.child(key);
+        break;
+      case "detailsAgriService":
+        itemRef = detailsAgriService.child(key);
+        break;
+      case "questionAndAnswer":
+        itemRef = questionAndAnswer.child(key);
+        break;
+
+      default:
+        console.error("Invalid section:", section);
+        return;
+    }
+
+    // Remove the item from the database
+    itemRef
+      .remove()
+      .then(function () {
+        console.log(
+          `Item with key ${key} deleted successfully from section ${section}`
+        );
+      })
+      .catch(function (error) {
+        console.error("Error deleting item:", error);
+      });
+  }
+}
+
+//Display pesticides and fertlizer
+function displayDataInScrollView(data, section) {
+  var scrollViewContainer = document.getElementById("scrollViewContainer");
+
+  // Clear previous content
+  scrollViewContainer.innerHTML = "";
+
+  // Iterate over the data and create elements for each item
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      var item = data[key];
+
+      // Create elements
+      var listItemContainer = document.createElement("div");
+      listItemContainer.className = "list-item-container";
+
+      var listItem = document.createElement("div");
+      listItem.className = "list-item";
+
+      var itemName = document.createElement("h3");
+      itemName.textContent = item.name;
+
+      var itemPrice = document.createElement("p");
+      itemPrice.textContent = "Price: " + item.price;
+
+      var itemImage = document.createElement("img");
+      itemImage.src = item.image; // Assuming 'image' is the URL stored in the database
+      itemImage.alt = "Product Image";
+
+      // Create delete button
+      var deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      // Use an IIFE (Immediately Invoked Function Expression) to capture the correct value of 'key'
+      (function (itemKey) {
+        deleteButton.addEventListener("click", function () {
+          // Call a function to handle deletion
+          deleteItem(itemKey, section);
+        });
+      })(key);
+
+      // Append elements to the list item
+      listItem.appendChild(itemName);
+      listItem.appendChild(itemPrice);
+      listItem.appendChild(itemImage);
+      listItem.appendChild(deleteButton);
+      // ... append other elements
+
+      // Append the list item to the container
+      scrollViewContainer.appendChild(listItem);
+    }
+  }
+}
+
+//Dsplay agriculure information
+function displayAgriInfoInScrollView(data, section) {
+  var scrollViewContainer = document.getElementById("scrollViewContainer");
+
+  // Clear previous content
+  scrollViewContainer.innerHTML = "";
+
+  // Iterate over the data and create elements for each item
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      var item = data[key];
+
+      // Create elements
+      var listItem = document.createElement("div");
+      listItem.className = "list-item-two";
+
+      var depName = document.createElement("h3");
+      depName.textContent = item.depName;
+
+      var tel = document.createElement("p");
+      tel.textContent = "Contact number : " + item.tel;
+
+      var location = document.createElement("p");
+      location.textContent = "Location : " + item.location;
+
+      // ... create other elements for other properties
+
+      // Append elements to the list item
+      listItem.appendChild(depName);
+      listItem.appendChild(tel);
+      listItem.appendChild(location);
+      // ... append other elements
+
+      // Append the list item to the container
+      scrollViewContainer.appendChild(listItem);
+    }
+  }
+}
+//Display FAQuestion
+function displayFAQuestionInScrollView(data, section) {
+  var scrollViewContainer = document.getElementById("scrollViewContainer");
+
+  // Clear previous content
+  scrollViewContainer.innerHTML = "";
+
+  // Iterate over the data and create elements for each item
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      var item = data[key];
+
+      // Create elements
+      var listItem = document.createElement("div");
+      listItem.className = "list-item-two";
+
+      var question = document.createElement("h3");
+      question.textContent = item.question;
+
+      var answer = document.createElement("p");
+      answer.textContent = "Answer: " + item.Answer;
+
+      // Append elements to the list item
+      listItem.appendChild(question);
+      listItem.appendChild(answer);
+      // ... append other elements
+
+      // Append the list item to the container
+      scrollViewContainer.appendChild(listItem);
+    }
+  }
+}
 
 function ClearDetails() {
   document.getElementById("name").value = "";
@@ -340,3 +429,94 @@ resetInformation.addEventListener("click", function () {
 resetFAQ.addEventListener("click", function () {
   ClearDetails();
 });
+
+function toggleForm() {
+  if (form.style.display === "none") {
+    details.once("value").then(function (snapshot) {
+      var data = snapshot.val();
+      displayDataInScrollView(data, "details");
+    });
+    form.style.display = "block";
+    form2.style.display = "none";
+    form3.style.display = "none";
+    form4.style.display = "none";
+  } else {
+    form.style.display = "none";
+  }
+}
+
+function toggleForm2() {
+  if (form2.style.display === "none") {
+    detailsFertilizer.once("value").then(function (snapshot) {
+      var data = snapshot.val();
+      displayDataInScrollView(data, "detailsFertilizer");
+    });
+
+    form2.style.display = "block";
+    form.style.display = "none";
+    form3.style.display = "none";
+    form4.style.display = "none";
+  } else {
+    form2.style.display = "none";
+  }
+}
+
+function toggleForm3() {
+  if (form3.style.display === "none") {
+    detailsAgriService.once("value").then(function (snapshot) {
+      var data = snapshot.val();
+      displayAgriInfoInScrollView(data, "detailsAgriService");
+    });
+
+    form3.style.display = "block";
+    form.style.display = "none";
+    form2.style.display = "none";
+    form4.style.display = "none";
+  } else {
+    form3.style.display = "none";
+  }
+}
+
+function toggleForm4() {
+  if (form4.style.display === "none") {
+    questionAndAnswer.once("value").then(function (snapshot) {
+      var data = snapshot.val();
+      displayFAQuestionInScrollView(data, "questionAndAnswer");
+    });
+    form4.style.display = "block";
+    form3.style.display = "none";
+    form.style.display = "none";
+    form2.style.display = "none";
+  } else {
+    form4.style.display = "none";
+  }
+}
+
+var pesticidesButtons = document.getElementsByClassName("pesticides");
+var fertilizerButtons = document.getElementsByClassName("fertilizer");
+var informationButtons = document.getElementsByClassName("information");
+var faqButtons = document.getElementsByClassName("faq");
+
+if (pesticidesButtons.length > 0) {
+  pesticidesButtons[0].addEventListener("click", function () {
+    toggleForm();
+  });
+}
+
+if (fertilizerButtons.length > 0) {
+  fertilizerButtons[0].addEventListener("click", function () {
+    toggleForm2();
+  });
+}
+
+if (informationButtons.length > 0) {
+  informationButtons[0].addEventListener("click", function () {
+    toggleForm3();
+  });
+}
+
+if (faqButtons.length > 0) {
+  faqButtons[0].addEventListener("click", function () {
+    toggleForm4();
+  });
+}
