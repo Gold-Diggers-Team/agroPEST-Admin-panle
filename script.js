@@ -274,6 +274,12 @@ function displayDataInScrollView(data, section) {
       var itemName = document.createElement("h3");
       itemName.textContent = item.name;
 
+      var isAvilable = document.createElement("p");
+      isAvilable.textContent = item.isAvilable;
+
+      var isAvilableFertlizer = document.createElement("p");
+      isAvilableFertlizer.textContent = item.isAvilableFertlizer;
+
       var itemPrice = document.createElement("p");
       itemPrice.textContent = "Price: " + item.price;
 
@@ -295,12 +301,14 @@ function displayDataInScrollView(data, section) {
       // Append elements to the list item
       listItem.appendChild(itemName);
       listItem.appendChild(itemPrice);
+      listItem.appendChild(isAvilable);
+      listItem.appendChild(isAvilableFertlizer);
       listItem.appendChild(itemImage);
       listItem.appendChild(deleteButton);
       // ... append other elements
 
       // Append the list item to the container
-      scrollViewContainer.appendChild(listItem);
+      scrollViewContainer.prepend(listItem);
     }
   }
 }
@@ -349,7 +357,7 @@ function displayAgriInfoInScrollView(data, section) {
       // ... append other elements
 
       // Append the list item to the container
-      scrollViewContainer.appendChild(listItem);
+      scrollViewContainer.prepend(listItem);
     }
   }
 }
@@ -393,7 +401,7 @@ function displayFAQuestionInScrollView(data, section) {
       // ... append other elements
 
       // Append the list item to the container
-      scrollViewContainer.appendChild(listItem);
+      scrollViewContainer.prepend(listItem);
     }
   }
 }
