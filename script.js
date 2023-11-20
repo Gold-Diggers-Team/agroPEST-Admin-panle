@@ -174,6 +174,7 @@ const saveFertlizerDetails = (
   // Convert Base64 to Blob
   var byteCharacters = atob(image.split(",")[1]);
   var byteNumbers = new Array(byteCharacters.length);
+
   for (var i = 0; i < byteCharacters.length; i++) {
     byteNumbers[i] = byteCharacters.charCodeAt(i);
   }
@@ -271,6 +272,9 @@ function displayDataInScrollView(data, section) {
       var listItem = document.createElement("div");
       listItem.className = "list-item";
 
+      var buttonSectiion = document.createElement("div");
+      buttonSectiion.className = "delete-update-button";
+
       var itemName = document.createElement("h3");
       itemName.textContent = item.name;
 
@@ -289,14 +293,25 @@ function displayDataInScrollView(data, section) {
 
       // Create delete button
       var deleteButton = document.createElement("button");
+      deleteButton.className = "botton-delete";
       deleteButton.textContent = "Delete";
-      // Use an IIFE (Immediately Invoked Function Expression) to capture the correct value of 'key'
-      (function (itemKey) {
-        deleteButton.addEventListener("click", function () {
-          // Call a function to handle deletion
-          deleteItem(itemKey, section);
-        });
-      })(key);
+      // Use the let keyword to capture the correct value of 'key'
+      let currentKey = key;
+      deleteButton.addEventListener("click", function () {
+        // Call a function to handle deletion
+        deleteItem(currentKey, section);
+      });
+
+      // Create update button
+      var updateButton = document.createElement("button");
+      updateButton.className = "botton-update";
+      updateButton.textContent = "Update";
+      // Use the let keyword to capture the correct value of 'key'
+      let updateKey = key;
+      updateButton.addEventListener("click", function () {
+        // Call a function to handle update
+        updateItem(updateKey, section, item);
+      });
 
       // Append elements to the list item
       listItem.appendChild(itemName);
@@ -304,13 +319,115 @@ function displayDataInScrollView(data, section) {
       listItem.appendChild(isAvilable);
       listItem.appendChild(isAvilableFertlizer);
       listItem.appendChild(itemImage);
-      listItem.appendChild(deleteButton);
+      listItem.append(buttonSectiion);
+      buttonSectiion.appendChild(deleteButton);
+      buttonSectiion.appendChild(updateButton);
       // ... append other elements
 
       // Append the list item to the container
       scrollViewContainer.prepend(listItem);
     }
   }
+}
+
+function updateItem(key, section) {
+  // Fetch the latest details from Firebase using the key
+  var itemRef;
+
+  // Determine the appropriate reference based on the section
+  switch (section) {
+    case "details":
+      itemRef = details.child(key);
+      break;
+    case "detailsFertilizer":
+      itemRef = detailsFertilizer.child(key);
+      break;
+    // Add other cases for different sections as needed
+
+    default:
+      console.error("Invalid section:", section);
+      return;
+  }
+
+  // Fetch the updated details
+  itemRef.once("value").then(function (snapshot) {
+    var updatedItem = snapshot.val();
+
+    // Now you have the updated details, you can perform the update logic
+    console.log("Update item with key:", key);
+    console.log("Item details:", updatedItem);
+
+    // Populate the form fields with the existing data
+    document.getElementById("name").value = updatedItem.name;
+    document.getElementById("price").value = updatedItem.price;
+    document.getElementById("description").value = updatedItem.description;
+    document.getElementById("isAvilable").value = updatedItem.isAvilable;
+
+    // Show the form for updating
+    form.style.display = "block";
+    form2.style.display = "none";
+    form3.style.display = "none";
+    form4.style.display = "none";
+
+    // Remove existing event listeners to avoid multiple executions
+    submitPesticides.removeEventListener("click", handleUpdate);
+
+    // Add an event listener to the submit button for handling the update
+    submitPesticides.addEventListener("click", function () {
+      // Call a function to handle the update
+      handleUpdate(key, section);
+    });
+
+    // You can update the UI or perform other actions here
+  });
+}
+
+// Function to handle the update after modifying the data in the form
+function handleUpdate(key, section) {
+  // Retrieve the modified data from the form
+  var updatedName = document.getElementById("name").value;
+  var updatedPrice = document.getElementById("price").value;
+  var updatedDescription = document.getElementById("description").value;
+  var updatedIsAvailable = document.getElementById("isAvilable").value;
+
+  // Update the data in the database
+  var itemRef;
+
+  // Determine the appropriate reference based on the section
+  switch (section) {
+    case "details":
+      itemRef = details.child(key);
+      break;
+    case "detailsFertilizer":
+      itemRef = detailsFertilizer.child(key);
+      break;
+    // Add other cases for different sections as needed
+
+    default:
+      console.error("Invalid section:", section);
+      return;
+  }
+
+  // Update the data in the database
+  itemRef.update({
+    name: updatedName,
+    price: updatedPrice,
+    description: updatedDescription,
+    isAvilable: updatedIsAvailable,
+    // Update other fields as needed
+  });
+
+  // Hide the form after updating
+  form.style.display = "none";
+
+  // Clear the form fields
+  ClearDetails();
+
+  // Reattach the original event listener for adding new items
+  submitPesticides.removeEventListener("click", handleUpdate);
+  submitPesticides.addEventListener("click", GetDetails);
+
+  // You can update the UI or perform other actions here
 }
 
 //Dsplay agriculure information
