@@ -264,6 +264,7 @@ input[type="file"]::file-selector-button {
   display: flex;
 }
 
+
 .list-item-two {
   border: 1px solid #ccc;
   padding: 10px;
@@ -304,17 +305,6 @@ input[type="file"]::file-selector-button {
   margin-left: 10px;
   cursor: pointer;
   border-radius: 4px;
-}
-
-.list-item-two   button {
-  background-color: #ff5c5c; /* Red background color */
-  color: #fff; /* White text color */
-  border: none;
-  padding: 10px;
-  display: flex;
-  margin-left: 10px;
-  cursor: pointer;
-  border-radius: 4px;/* Add some space between the button and other elements */
 }
 
 button:hover {

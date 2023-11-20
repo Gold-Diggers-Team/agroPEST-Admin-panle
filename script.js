@@ -342,8 +342,13 @@ function updateItem(key, section) {
     case "detailsFertilizer":
       itemRef = detailsFertilizer.child(key);
       break;
+    case "detailsAgriService":
+      itemRef = detailsAgriService.child(key);
+      break;
     // Add other cases for different sections as needed
-
+    case "questionAndAnswer":
+      itemRef = questionAndAnswer.child(key);
+      break;
     default:
       console.error("Invalid section:", section);
       return;
@@ -358,25 +363,65 @@ function updateItem(key, section) {
     console.log("Item details:", updatedItem);
 
     // Populate the form fields with the existing data
-    document.getElementById("name").value = updatedItem.name;
-    document.getElementById("price").value = updatedItem.price;
-    document.getElementById("description").value = updatedItem.description;
-    document.getElementById("isAvilable").value = updatedItem.isAvilable;
-
-    // Show the form for updating
-    form.style.display = "block";
-    form2.style.display = "none";
-    form3.style.display = "none";
-    form4.style.display = "none";
+    switch (section) {
+      case "details":
+        document.getElementById("name").value = updatedItem.name;
+        document.getElementById("price").value = updatedItem.price;
+        document.getElementById("description").value = updatedItem.description;
+        document.getElementById("isAvilable").value = updatedItem.isAvilable;
+        toggleForm("details");
+        break;
+      case "detailsFertilizer":
+        document.getElementById("nameFertilizer").value = updatedItem.name;
+        document.getElementById("priceFertilizer").value = updatedItem.price;
+        document.getElementById("descriptionFertilizer").value =
+          updatedItem.description;
+        document.getElementById("isAvilableFertlizer").value =
+          updatedItem.isAvilableFertlizer;
+        toggleForm2("detailsFertilizer");
+        break;
+      case "detailsAgriService":
+        document.getElementById("depName").value = updatedItem.depName;
+        document.getElementById("tel").value = updatedItem.tel;
+        document.getElementById("location").value = updatedItem.location;
+        toggleForm3("detailsAgriService");
+        break;
+      case "questionAndAnswer":
+        document.getElementById("question").value = updatedItem.question;
+        document.getElementById("Answer").value = updatedItem.Answer;
+        toggleForm4("questionAndAnswer");
+        break;
+      default:
+        console.error("Invalid section:", section);
+        return;
+    }
 
     // Remove existing event listeners to avoid multiple executions
-    submitPesticides.removeEventListener("click", handleUpdate);
-
-    // Add an event listener to the submit button for handling the update
-    submitPesticides.addEventListener("click", function () {
-      // Call a function to handle the update
-      handleUpdate(key, section);
-    });
+    if (section === "details") {
+      submitPesticides.removeEventListener("click", handleUpdate);
+      submitPesticides.addEventListener("click", function () {
+        // Call a function to handle the update
+        handleUpdate(key, section);
+      });
+    } else if (section === "detailsFertilizer") {
+      submitFertilizer.removeEventListener("click", handleUpdate);
+      submitFertilizer.addEventListener("click", function () {
+        // Call a function to handle the update
+        handleUpdate(key, section);
+      });
+    } else if (section === "detailsAgriService") {
+      submitInformation.removeEventListener("click", handleUpdate);
+      submitInformation.addEventListener("click", function () {
+        // Call a function to handle the update
+        handleUpdate(key, section);
+      });
+    } else if (section === "questionAndAnswer") {
+      submitFAQ.removeEventListener("click", handleUpdate);
+      submitFAQ.addEventListener("click", function () {
+        // Call a function to handle the update
+        handleUpdate(key, section);
+      });
+    }
 
     // You can update the UI or perform other actions here
   });
@@ -385,10 +430,45 @@ function updateItem(key, section) {
 // Function to handle the update after modifying the data in the form
 function handleUpdate(key, section) {
   // Retrieve the modified data from the form
-  var updatedName = document.getElementById("name").value;
-  var updatedPrice = document.getElementById("price").value;
-  var updatedDescription = document.getElementById("description").value;
-  var updatedIsAvailable = document.getElementById("isAvilable").value;
+  var updatedName,
+    updatedPrice,
+    updatedDescription,
+    updatedIsAvailable,
+    updatedDepName,
+    updatedLocation,
+    updatedTel,
+    updatedQuestion,
+    updatedAnswer;
+
+  // Determine the appropriate form elements based on the section
+  switch (section) {
+    case "details":
+      updatedName = document.getElementById("name").value;
+      updatedPrice = document.getElementById("price").value;
+      updatedDescription = document.getElementById("description").value;
+      updatedIsAvailable = document.getElementById("isAvilable").value;
+      break;
+    case "detailsFertilizer":
+      updatedName = document.getElementById("nameFertilizer").value;
+      updatedPrice = document.getElementById("priceFertilizer").value;
+      updatedDescription = document.getElementById(
+        "descriptionFertilizer"
+      ).value;
+      updatedIsAvailable = document.getElementById("isAvilableFertlizer").value;
+      break;
+    case "detailsAgriService ":
+      updatedDepName = document.getElementById("depName").value;
+      updatedLocation = document.getElementById("location").value;
+      updatedTel = document.getElementById("tel").value;
+      break;
+    case "questionAndAnswer":
+      updatedQuestion = document.getElementById("question").value;
+      updatedAnswer = document.getElementById("Answer").value;
+      break;
+    default:
+      console.error("Invalid section:", section);
+      return;
+  }
 
   // Update the data in the database
   var itemRef;
@@ -401,8 +481,12 @@ function handleUpdate(key, section) {
     case "detailsFertilizer":
       itemRef = detailsFertilizer.child(key);
       break;
-    // Add other cases for different sections as needed
-
+    case "detailsAgriService ":
+      itemRef = detailsAgriService.child(key);
+      break;
+    case "questionAndAnswer ":
+      itemRef = questionAndAnswer.child(key);
+      break;
     default:
       console.error("Invalid section:", section);
       return;
@@ -414,18 +498,56 @@ function handleUpdate(key, section) {
     price: updatedPrice,
     description: updatedDescription,
     isAvilable: updatedIsAvailable,
+    depName: updatedDepName,
+    tel: updatedTel,
+    location: updatedLocation,
+    question: updatedQuestion,
+    tel: updatedTel,
     // Update other fields as needed
   });
 
   // Hide the form after updating
-  form.style.display = "none";
+  switch (section) {
+    case "details":
+      form.style.display = "none";
+      break;
+    case "detailsFertilizer":
+      form2.style.display = "none";
+      break;
+    case "detailsAgriService":
+      form3.style.display = "none";
+      break;
+    case "questionAndAnswer ":
+      form4.style.display = "none;";
+      break;
+    default:
+      console.error("Invalid section:", section);
+      return;
+  }
 
   // Clear the form fields
   ClearDetails();
 
   // Reattach the original event listener for adding new items
-  submitPesticides.removeEventListener("click", handleUpdate);
-  submitPesticides.addEventListener("click", GetDetails);
+  switch (section) {
+    case "details":
+      submitPesticides.removeEventListener("click", handleUpdate);
+      submitPesticides.addEventListener("click", GetDetails);
+      break;
+    case "detailsFertilizer":
+      submitFertilizer.removeEventListener("click", handleUpdate);
+      submitFertilizer.addEventListener("click", GetFertlizerDetails);
+      break;
+    case "detailsAgriService":
+      submitInformation.removeEventListener("click", handleUpdate);
+      submitInformation.addEventListener("click", GetInformation);
+    case "questionAndAnswer ":
+      submitFAQ.removeEventListener("click", handleUpdate);
+      submitFAQ.addEventListener("click", GetFAQ);
+    default:
+      console.error("Invalid section:", section);
+      return;
+  }
 
   // You can update the UI or perform other actions here
 }
@@ -446,6 +568,9 @@ function displayAgriInfoInScrollView(data, section) {
       var listItem = document.createElement("div");
       listItem.className = "list-item-two";
 
+      var buttonSectiion = document.createElement("div");
+      buttonSectiion.className = "delete-update-button";
+
       var depName = document.createElement("h3");
       depName.textContent = item.depName;
 
@@ -457,6 +582,7 @@ function displayAgriInfoInScrollView(data, section) {
 
       // Create delete button
       var deleteButton = document.createElement("button");
+      deleteButton.className = "botton-delete";
       deleteButton.textContent = "Delete";
       // Use an IIFE (Immediately Invoked Function Expression) to capture the correct value of 'key'
       (function (itemKey) {
@@ -466,11 +592,24 @@ function displayAgriInfoInScrollView(data, section) {
         });
       })(key);
 
+      // Create update button
+      var updateButton = document.createElement("button");
+      updateButton.className = "botton-update";
+      updateButton.textContent = "Update";
+      // Use the let keyword to capture the correct value of 'key'
+      let updateKey = key;
+      updateButton.addEventListener("click", function () {
+        // Call a function to handle update
+        updateItem(updateKey, section, item);
+      });
+
       // Append elements to the list item
       listItem.appendChild(depName);
       listItem.appendChild(tel);
       listItem.appendChild(location);
-      listItem.appendChild(deleteButton);
+      listItem.append(buttonSectiion);
+      buttonSectiion.appendChild(deleteButton);
+      buttonSectiion.appendChild(updateButton);
       // ... append other elements
 
       // Append the list item to the container
@@ -494,6 +633,9 @@ function displayFAQuestionInScrollView(data, section) {
       var listItem = document.createElement("div");
       listItem.className = "list-item-two";
 
+      var buttonSectiion = document.createElement("div");
+      buttonSectiion.className = "delete-update-button";
+
       var question = document.createElement("h3");
       question.textContent = item.question;
 
@@ -502,6 +644,7 @@ function displayFAQuestionInScrollView(data, section) {
 
       // Create delete button
       var deleteButton = document.createElement("button");
+      deleteButton.className = "botton-delete";
       deleteButton.textContent = "Delete";
       // Use an IIFE (Immediately Invoked Function Expression) to capture the correct value of 'key'
       (function (itemKey) {
@@ -511,10 +654,24 @@ function displayFAQuestionInScrollView(data, section) {
         });
       })(key);
 
+      // Create update button
+      var updateButton = document.createElement("button");
+      updateButton.className = "botton-update";
+      updateButton.textContent = "Update";
+      // Use the let keyword to capture the correct value of 'key'
+      let updateKey = key;
+      updateButton.addEventListener("click", function () {
+        // Call a function to handle update
+        updateItem(updateKey, section, item);
+      });
+
       // Append elements to the list item
+
       listItem.appendChild(question);
       listItem.appendChild(answer);
-      listItem.appendChild(deleteButton);
+      listItem.append(buttonSectiion);
+      buttonSectiion.append(deleteButton);
+      buttonSectiion.appendChild(updateButton);
       // ... append other elements
 
       // Append the list item to the container
@@ -574,12 +731,13 @@ resetFAQ.addEventListener("click", function () {
   ClearDetails();
 });
 
-function toggleForm() {
-  if (form.style.display === "none") {
+function toggleForm(formToShow) {
+  if (formToShow === "details") {
     details.once("value").then(function (snapshot) {
       var data = snapshot.val();
       displayDataInScrollView(data, "details");
     });
+
     form.style.display = "block";
     form2.style.display = "none";
     form3.style.display = "none";
@@ -589,8 +747,8 @@ function toggleForm() {
   }
 }
 
-function toggleForm2() {
-  if (form2.style.display === "none") {
+function toggleForm2(formToShow) {
+  if (formToShow === "detailsFertilizer") {
     detailsFertilizer.once("value").then(function (snapshot) {
       var data = snapshot.val();
       displayDataInScrollView(data, "detailsFertilizer");
@@ -605,8 +763,8 @@ function toggleForm2() {
   }
 }
 
-function toggleForm3() {
-  if (form3.style.display === "none") {
+function toggleForm3(formToShow) {
+  if (formToShow === "detailsAgriService") {
     detailsAgriService.once("value").then(function (snapshot) {
       var data = snapshot.val();
       displayAgriInfoInScrollView(data, "detailsAgriService");
@@ -621,8 +779,8 @@ function toggleForm3() {
   }
 }
 
-function toggleForm4() {
-  if (form4.style.display === "none") {
+function toggleForm4(formToShow) {
+  if (formToShow === "questionAndAnswer") {
     questionAndAnswer.once("value").then(function (snapshot) {
       var data = snapshot.val();
       displayFAQuestionInScrollView(data, "questionAndAnswer");
@@ -643,24 +801,24 @@ var faqButtons = document.getElementsByClassName("faq");
 
 if (pesticidesButtons.length > 0) {
   pesticidesButtons[0].addEventListener("click", function () {
-    toggleForm();
+    toggleForm("details");
   });
 }
 
 if (fertilizerButtons.length > 0) {
   fertilizerButtons[0].addEventListener("click", function () {
-    toggleForm2();
+    toggleForm2("detailsFertilizer");
   });
 }
 
 if (informationButtons.length > 0) {
   informationButtons[0].addEventListener("click", function () {
-    toggleForm3();
+    toggleForm3("detailsAgriService");
   });
 }
 
 if (faqButtons.length > 0) {
   faqButtons[0].addEventListener("click", function () {
-    toggleForm4();
+    toggleForm4("questionAndAnswer");
   });
 }
