@@ -133,31 +133,75 @@ function GetFAQ() {
 }
 
 const saveDetails = (name, price, description, image, isAvilable) => {
-  var storageRef = firebase.storage().ref();
-  var imagesRef = storageRef.child("images/" + name + ".jpg"); // Adjust the path and file name as needed
+  var detailsRef = details.orderByChild("name").equalTo(name);
 
-  // Convert Base64 to Blob
-  var byteCharacters = atob(image.split(",")[1]);
-  var byteNumbers = new Array(byteCharacters.length);
-  for (var i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  var byteArray = new Uint8Array(byteNumbers);
-  var blob = new Blob([byteArray], { type: "image/jpeg" });
+  detailsRef.once("value").then(function (snapshot) {
+    var existingPesticide = snapshot.val();
 
-  // Upload the image to Firebase Storage
-  imagesRef.put(blob).then(function (snapshot) {
-    // Get the download URL and save it in the Realtime Database
-    snapshot.ref.getDownloadURL().then(function (downloadURL) {
-      var newDetails = details.push();
-      newDetails.set({
-        name: name,
-        price: price,
-        description: description,
-        image: downloadURL, // Store the download URL
-        isAvilable: isAvilable,
+    if (existingPesticide) {
+      // Pesticide already exists, update it
+      for (var key in existingPesticide) {
+        if (existingPesticide.hasOwnProperty(key)) {
+          var pesticideKey = key;
+
+          var storageRef = firebase.storage().ref();
+          var imagesRef = storageRef.child("images/" + name + ".jpg");
+
+          // Convert Base64 to Blob
+          var byteCharacters = atob(image.split(",")[1]);
+          var byteNumbers = new Array(byteCharacters.length);
+
+          for (var i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          var byteArray = new Uint8Array(byteNumbers);
+          var blob = new Blob([byteArray], { type: "image/jpeg" });
+
+          // Upload the image to Firebase Storage
+          imagesRef.put(blob).then(function (snapshot) {
+            // Get the download URL and update the existing record
+            snapshot.ref.getDownloadURL().then(function (downloadURL) {
+              details.child(pesticideKey).update({
+                name: name,
+                price: price,
+                description: description,
+                image: downloadURL,
+                isAvilable: isAvilable,
+              });
+            });
+          });
+        }
+      }
+    } else {
+      // Pesticide doesn't exist, create a new record
+      var storageRef = firebase.storage().ref();
+      var imagesRef = storageRef.child("images/" + name + ".jpg");
+
+      // Convert Base64 to Blob
+      var byteCharacters = atob(image.split(",")[1]);
+      var byteNumbers = new Array(byteCharacters.length);
+
+      for (var i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      var byteArray = new Uint8Array(byteNumbers);
+      var blob = new Blob([byteArray], { type: "image/jpeg" });
+
+      // Upload the image to Firebase Storage
+      imagesRef.put(blob).then(function (snapshot) {
+        // Get the download URL and create a new record
+        snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          var newDetails = details.push();
+          newDetails.set({
+            name: name,
+            price: price,
+            description: description,
+            image: downloadURL,
+            isAvilable: isAvilable,
+          });
+        });
       });
-    });
+    }
   });
 };
 
@@ -168,49 +212,137 @@ const saveFertlizerDetails = (
   image,
   isAvilableFertlizer
 ) => {
-  var storageRef = firebase.storage().ref();
-  var imagesRef = storageRef.child("images/" + name + ".jpg"); // Adjust the path and file name as needed
+  var detailsRef = detailsFertilizer.orderByChild("name").equalTo(name);
 
-  // Convert Base64 to Blob
-  var byteCharacters = atob(image.split(",")[1]);
-  var byteNumbers = new Array(byteCharacters.length);
+  detailsRef.once("value").then(function (snapshot) {
+    var existingFertilizer = snapshot.val();
 
-  for (var i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  var byteArray = new Uint8Array(byteNumbers);
-  var blob = new Blob([byteArray], { type: "image/jpeg" });
+    if (existingFertilizer) {
+      // Fertilizer already exists, update it
+      for (var key in existingFertilizer) {
+        if (existingFertilizer.hasOwnProperty(key)) {
+          var fertilizerKey = key;
 
-  // Upload the image to Firebase Storage
-  imagesRef.put(blob).then(function (snapshot) {
-    // Get the download URL and save it in the Realtime Database
-    snapshot.ref.getDownloadURL().then(function (downloadURL) {
-      var newDetails = detailsFertilizer.push();
-      newDetails.set({
-        name: name,
-        price: price,
-        description: description,
-        image: downloadURL, // Store the download URL
-        isAvilableFertlizer: isAvilableFertlizer,
+          var storageRef = firebase.storage().ref();
+          var imagesRef = storageRef.child("images/" + name + ".jpg");
+
+          // Convert Base64 to Blob
+          var byteCharacters = atob(image.split(",")[1]);
+          var byteNumbers = new Array(byteCharacters.length);
+
+          for (var i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          var byteArray = new Uint8Array(byteNumbers);
+          var blob = new Blob([byteArray], { type: "image/jpeg" });
+
+          // Upload the image to Firebase Storage
+          imagesRef.put(blob).then(function (snapshot) {
+            // Get the download URL and update the existing record
+            snapshot.ref.getDownloadURL().then(function (downloadURL) {
+              detailsFertilizer.child(fertilizerKey).update({
+                name: name,
+                price: price,
+                description: description,
+                image: downloadURL,
+                isAvilableFertlizer: isAvilableFertlizer,
+              });
+            });
+          });
+        }
+      }
+    } else {
+      // Fertilizer doesn't exist, create a new record
+      var storageRef = firebase.storage().ref();
+      var imagesRef = storageRef.child("images/" + name + ".jpg");
+
+      // Convert Base64 to Blob
+      var byteCharacters = atob(image.split(",")[1]);
+      var byteNumbers = new Array(byteCharacters.length);
+
+      for (var i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      var byteArray = new Uint8Array(byteNumbers);
+      var blob = new Blob([byteArray], { type: "image/jpeg" });
+
+      // Upload the image to Firebase Storage
+      imagesRef.put(blob).then(function (snapshot) {
+        // Get the download URL and create a new record
+        snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          var newDetails = detailsFertilizer.push();
+          newDetails.set({
+            name: name,
+            price: price,
+            description: description,
+            image: downloadURL,
+            isAvilableFertlizer: isAvilableFertlizer,
+          });
+        });
       });
-    });
+    }
   });
 };
 
 const saveInformation = (depName, tel, location) => {
-  var newDetails = detailsAgriService.push();
-  newDetails.set({
-    depName: depName,
-    tel: tel,
-    location: location,
+  var agriServiceRef = detailsAgriService
+    .orderByChild("depName")
+    .equalTo(depName);
+
+  agriServiceRef.once("value").then(function (snapshot) {
+    var existingAgriService = snapshot.val();
+
+    if (existingAgriService) {
+      // Agriculture information already exists, update it
+      for (var key in existingAgriService) {
+        if (existingAgriService.hasOwnProperty(key)) {
+          var agriServiceKey = key;
+
+          detailsAgriService.child(agriServiceKey).update({
+            depName: depName,
+            tel: tel,
+            location: location,
+          });
+        }
+      }
+    } else {
+      // Agriculture information doesn't exist, create a new record
+      var newDetails = detailsAgriService.push();
+      newDetails.set({
+        depName: depName,
+        tel: tel,
+        location: location,
+      });
+    }
   });
 };
 
 const saveFAQ = (question, Answer) => {
-  var newDetails = questionAndAnswer.push();
-  newDetails.set({
-    question: question,
-    Answer: Answer,
+  var faqRef = questionAndAnswer.orderByChild("question").equalTo(question);
+
+  faqRef.once("value").then(function (snapshot) {
+    var existingFAQ = snapshot.val();
+
+    if (existingFAQ) {
+      // FAQ already exists, update it
+      for (var key in existingFAQ) {
+        if (existingFAQ.hasOwnProperty(key)) {
+          var faqKey = key;
+
+          questionAndAnswer.child(faqKey).update({
+            question: question,
+            Answer: Answer,
+          });
+        }
+      }
+    } else {
+      // FAQ doesn't exist, create a new record
+      var newDetails = questionAndAnswer.push();
+      newDetails.set({
+        question: question,
+        Answer: Answer,
+      });
+    }
   });
 };
 
