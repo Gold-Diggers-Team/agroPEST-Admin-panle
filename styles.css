@@ -108,6 +108,7 @@ body{
     background: #F7F7F7;
 }
 #question,
+#location,
 #depName{
     outline: none;
     height: 15px;
@@ -126,7 +127,7 @@ body{
   resize: none;
 }
 
-#tel,#location{
+#tel{
     outline: none;
     height: 15px;
     width: 100px;
