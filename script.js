@@ -56,7 +56,7 @@ function GetDetails() {
     // Convert the image to Base64
     var reader = new FileReader();
     reader.onloadend = function () {
-      saveDetails(name, "Rs." + price, description, reader.result, isAvilable);
+      saveDetails(name, price, description, reader.result, isAvilable);
     };
     reader.readAsDataURL(imageFile);
   }
@@ -931,26 +931,53 @@ var fertilizerButtons = document.getElementsByClassName("fertilizer");
 var informationButtons = document.getElementsByClassName("information");
 var faqButtons = document.getElementsByClassName("faq");
 
+var pesticidesButtons = document.getElementsByClassName("pesticides");
+var fertilizerButtons = document.getElementsByClassName("fertilizer");
+var informationButtons = document.getElementsByClassName("information");
+var faqButtons = document.getElementsByClassName("faq");
+
+function resetButtonBackground(buttons) {
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].style.backgroundColor = "#EEAF4B";
+  }
+}
+
 if (pesticidesButtons.length > 0) {
   pesticidesButtons[0].addEventListener("click", function () {
     toggleForm("details");
+    this.style.backgroundColor = "#ffffff";
+    resetButtonBackground(fertilizerButtons);
+    resetButtonBackground(informationButtons);
+    resetButtonBackground(faqButtons);
   });
 }
 
 if (fertilizerButtons.length > 0) {
   fertilizerButtons[0].addEventListener("click", function () {
     toggleForm2("detailsFertilizer");
+    this.style.backgroundColor = "#ffffff";
+    resetButtonBackground(pesticidesButtons);
+    resetButtonBackground(informationButtons);
+    resetButtonBackground(faqButtons);
   });
 }
 
 if (informationButtons.length > 0) {
   informationButtons[0].addEventListener("click", function () {
     toggleForm3("detailsAgriService");
+    this.style.backgroundColor = "#ffffff";
+    resetButtonBackground(pesticidesButtons);
+    resetButtonBackground(fertilizerButtons);
+    resetButtonBackground(faqButtons);
   });
 }
 
 if (faqButtons.length > 0) {
   faqButtons[0].addEventListener("click", function () {
     toggleForm4("questionAndAnswer");
+    this.style.backgroundColor = "#ffffff";
+    resetButtonBackground(pesticidesButtons);
+    resetButtonBackground(fertilizerButtons);
+    resetButtonBackground(informationButtons);
   });
 }
