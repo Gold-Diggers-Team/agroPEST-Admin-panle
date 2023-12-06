@@ -810,6 +810,7 @@ function displayFAQuestionInScrollView(data, section) {
   }
 }
 
+//Clear  Details function
 function ClearDetails() {
   document.getElementById("name").value = "";
   document.getElementById("price").value = "";
@@ -832,6 +833,7 @@ function ClearDetails() {
   document.getElementById("Answer").value = "";
 }
 
+// Submit buttons
 submitPesticides.addEventListener("click", function () {
   GetDetails();
 });
@@ -848,6 +850,7 @@ submitFAQ.addEventListener("click", function () {
   GetFAQ();
 });
 
+// Reset button
 resetPesticides.addEventListener("click", function () {
   ClearDetails();
 });
@@ -861,65 +864,90 @@ resetFAQ.addEventListener("click", function () {
   ClearDetails();
 });
 
+// Function to toggle between different forms based on the formToShow parameter
 function toggleForm(formToShow) {
+  // Check if the form to show is "details"
   if (formToShow === "details") {
+    // Retrieve data from the "details" node in the database
     details.once("value").then(function (snapshot) {
       var data = snapshot.val();
+      // Display the retrieved data in the scroll view for "details"
       displayDataInScrollView(data, "details");
     });
 
+    // Show the "details" form and hide other forms
     form.style.display = "block";
     form2.style.display = "none";
     form3.style.display = "none";
     form4.style.display = "none";
   } else {
+    // Hide the form if the condition is not met
     form.style.display = "none";
   }
 }
 
+// Function to toggle between different forms for form2
 function toggleForm2(formToShow) {
+  // Check if the form to show is "detailsFertilizer"
   if (formToShow === "detailsFertilizer") {
+    // Retrieve data from the "detailsFertilizer" node in the database
     detailsFertilizer.once("value").then(function (snapshot) {
       var data = snapshot.val();
+      // Display the retrieved data in the scroll view for "detailsFertilizer"
       displayDataInScrollView(data, "detailsFertilizer");
     });
 
+    // Show the "detailsFertilizer" form and hide other forms
     form2.style.display = "block";
     form.style.display = "none";
     form3.style.display = "none";
     form4.style.display = "none";
   } else {
+    // Hide the form if the condition is not met
     form2.style.display = "none";
   }
 }
 
+// Function to toggle between different forms for form3
 function toggleForm3(formToShow) {
+  // Check if the form to show is "detailsAgriService"
   if (formToShow === "detailsAgriService") {
+    // Retrieve data from the "detailsAgriService" node in the database
     detailsAgriService.once("value").then(function (snapshot) {
       var data = snapshot.val();
+      // Display the retrieved data in the scroll view for "detailsAgriService"
       displayAgriInfoInScrollView(data, "detailsAgriService");
     });
 
+    // Show the "detailsAgriService" form and hide other forms
     form3.style.display = "block";
     form.style.display = "none";
     form2.style.display = "none";
     form4.style.display = "none";
   } else {
+    // Hide the form if the condition is not met
     form3.style.display = "none";
   }
 }
 
+// Function to toggle between different forms for form4
 function toggleForm4(formToShow) {
+  // Check if the form to show is "questionAndAnswer"
   if (formToShow === "questionAndAnswer") {
+    // Retrieve data from the "questionAndAnswer" node in the database
     questionAndAnswer.once("value").then(function (snapshot) {
       var data = snapshot.val();
+      // Display the retrieved data in the scroll view for "questionAndAnswer"
       displayFAQuestionInScrollView(data, "questionAndAnswer");
     });
+
+    // Show the "questionAndAnswer" form and hide other forms
     form4.style.display = "block";
     form3.style.display = "none";
     form.style.display = "none";
     form2.style.display = "none";
   } else {
+    // Hide the form if the condition is not met
     form4.style.display = "none";
   }
 }
