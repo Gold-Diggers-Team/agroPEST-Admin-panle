@@ -26,43 +26,43 @@
                                 text-align: center;
                                 font-size: 60px;
                                 font-weight: 700;
-                                text-shadow: 0 0 10px #000000, 0 0 10px #000000; 
+                                text-shadow: 0 0 10px #000000, 0 0 10px #000000;
                                 letter-spacing: 3px;">PEST</strong></h1>
                     <h1 id="hedaer-topic">Admin panel</h1>
                 </div>
-            </div> 
-
+            </div>
+ 
              <!-- button container-->
             <div style="display: flex;justify-content: center;">
                 <div id="buttons">
                     <div class="button pesticides">
-                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;font-weight: 600;">Pesticides</p>
+                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 600;">Pesticides</p>
                         <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 30px; color: #1C470D;"></i>
                     </div>
                     <div class="button fertilizer">
-                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;font-weight: 600;">Fertilizer</p>
+                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 600;">Fertilizer</p>
                         <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 30px; color: #1C470D;"></i>
                     </div>
                     <div class="button information">
-                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;font-weight: 600;">Agriculture Service</p>
+                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 600;">Agriculture Service Location</p>
                         <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 30px;color: #1C470D;"></i>
                     </div>
                     <div class="button faq">
-                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 20px;font-weight: 600;">Add FAQ</p>
+                        <p style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: 600;">Add FAQ</p>
                         <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 30px;color: #1C470D;"></i>
                     </div>
-                </div>     
+                </div>    
             </div>
-
+ 
             <div style="display: flex; width: 100%; justify-content:space-around;">
-
+ 
                 <div style="margin-top: 10px;    
                             width: 611px;
                             height: 520px;
                             border-radius: 15px;
                             background: rgba(121, 152, 187, 0.71);
                             box-shadow: 5px 4px 17px 10px rgba(0, 0, 0, 0.25);">
-            
+           
             <!-- Pesticides form content -->
                 <div id="content-one">
                     <table id="form1">
@@ -101,9 +101,9 @@
                             <input type="submit" name="submit" id="submitPesticides"/>
                             <input type="reset" name="submit" id="resetPesticides"/>
                         </div>
-                    </div> 
+                    </div>
                 </div>
-
+ 
             <!-- Fertlizer form content -->
                 <div id="content-two">
                     <table id="form2">
@@ -123,7 +123,7 @@
                         <tr>
                             <td class="text">Price</td>
                             <td class="text">:</td>
-                            <td><input id="priceFertilizer" type="text"/></td> 
+                            <td><input id="priceFertilizer" type="text"/></td>
                         </tr>
                         <tr>
                             <td class="text">Image</td>
@@ -141,10 +141,10 @@
                             <input type="submit" name="submit" id="submitFertilizer"/>
                             <input type="reset" name="submit" id="resetFertilizer"/>
                         </div>
-                    </div> 
+                    </div>
                 </div>
-
-            <!-- Agriculture service form content -->   
+ 
+            <!-- Agriculture service form content -->  
                 <div id="content-three">
                     <table id="form">
                         <tr>
@@ -156,25 +156,25 @@
                             <td class="text">Contact number</td>
                             <td class="text">:</td>
                             <td ><input id="tel" type="tel"/></td>
-                            
+                           
                         </tr>
                         <tr>
                             <td class="text">Location</td>
                             <td class="text">:</td>
                             <td ><input id="location" type="text"/></td>
                         </tr>
-                    
+                   
                     </table>
                     <div id="form-buttons">
                         <div style="width: 100%;display: flex;justify-content: space-evenly;">
                             <input type="submit" name="submit" id="submitInformation"/>
                             <input type="reset" name="submit" id="resetInformation"/>
                         </div>
-                    </div> 
+                    </div>
                 </div>
-
-                
-            <!-- Add FAQ form content -->   
+ 
+               
+            <!-- Add FAQ form content -->  
             <div id="content-four">
                 <table id="FAQ">
                     <tr>
@@ -182,7 +182,7 @@
                         <td class="text">:</td>
                         <td colspan="5"><input id="question" type="text"/></td>
                     </tr>
-                
+               
                     <tr>
                         <td class="text">Answer</td>
                         <td class="text">:</td>
@@ -194,30 +194,30 @@
                         <input type="submit" name="submit" id="submitFAQ"/>
                         <input type="reset" name="submit" id="resetFAQ"/>
                     </div>
-                </div> 
+                </div>
             </div>
-      
+     
             </div>
-
+ 
             <div style="margin-top: 10px;    
                         width: 426px;
                         height: 520px;
                         border-radius: 15px;
                         background: rgba(121, 152, 187, 0.71);
                         box-shadow: 5px 4px 17px 10px rgba(0, 0, 0, 0.25);
-                        overflow: auto;"> 
+                        overflow: auto;">
                 <div id="scrollViewContainer"></div>
             </div>
            </div>
-        </div> 
-
+        </div>
+ 
     <!-- Include Firebase library -->
 <!-- Include Firebase library -->
 <!-- Include Firebase library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
 <!-- Your script.js inclusion -->
 <script src="script.js" defer></script>
-
-    
+ 
+   
 </body>
 </html>

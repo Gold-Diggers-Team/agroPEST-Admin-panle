@@ -680,8 +680,6 @@ function handleUpdate(key, section) {
       console.error("Invalid section:", section);
       return;
   }
-
-  // You can update the UI or perform other actions here
 }
 
 //Dsplay agriculure information
