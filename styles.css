@@ -195,7 +195,7 @@ input[type="file"]::file-selector-button {
     border: none;
     cursor: pointer;
     border-radius: 8px;
-    background: rgba(59, 183, 15, 0.99);
+    background: rgba(119, 183, 15, 0.99);
   }
 
   input[type="reset"]{
